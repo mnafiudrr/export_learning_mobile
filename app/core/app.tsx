@@ -5,6 +5,8 @@ import {useFonts} from 'expo-font';
 import React, {useState} from 'react';
 import RootNavigation from './config/RootNavigation';
 import { useNavigationPersistence } from './utils/navigation-utils';
+import {AppLoading} from './component/AppLoading';
+import {useRefLoading} from './utils/loader';
 
 const NAVIGATION_PERSISTENCE_KEY = '@root_nav_state';
 
@@ -19,6 +21,7 @@ export default function App() {
         onStateChange={onNavigationStateChange}
       >
         <RootNavigation />
+        <AppLoading ref={(as) => useRefLoading(as)} />
       </NavigationContainer>
   );
 }

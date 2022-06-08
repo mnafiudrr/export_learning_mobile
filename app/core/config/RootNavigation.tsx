@@ -2,12 +2,14 @@
 import React, {useState} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import SplashNavigation from '~/app/features/splash/config/Navigation';
+import HomeNavigation from '~/app/features/home/config/Navigation';
 
 const Root = createStackNavigator();
 
 function listScreen() {
   return [
     ...SplashNavigation.getNavigation(Root),
+    ...HomeNavigation.getNavigation(Root),
   ];
 }
 
