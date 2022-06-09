@@ -1,11 +1,12 @@
 import {CompositeNavigationProp} from '@react-navigation/native';
-import React, { useEffect } from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet, View, ActivityIndicator, Platform, Dimensions, Text, Image,
 } from 'react-native';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import AppView from '~/app/core/component/AppView';
-import { showLoading } from '~/app/core/utils/loader';
+import { URL_SPLASH } from '~/app/service/ApiServices';
 import HomeScreen from '../../home/config/Screens';
 
 const heightScreen = Dimensions.get('screen').height;
@@ -39,19 +40,37 @@ const styles = StyleSheet.create({
 
 export default function Splash({navigation}: {navigation: CompositeNavigationProp<any, any>}) {
 
+  const [imageUrl, setImageUrl] = useState('');
+
   useEffect(() => {
-    // showLoading(true);
-    setTimeout(() => {
-      // showLoading(false);
-      HomeScreen.HOME.navigate(navigation);
-    }, 3000);
+    getImage();
   }, []);
   
+  const getImage = async () => {
+
+    try {
+      const response = await axios({
+        method: 'get',
+        url: URL_SPLASH,
+      });
+      setImageUrl(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+
+    setTimeout(() => {
+      HomeScreen.HOME.navigate(navigation);
+    }, 3000);
+
+  }
+
 
   return (
     <AppView withSafeArea withHeader={false}>
       <View style={styles.container}>
-        <Image style={styles.logo} source={{ uri:'https://placeholder.com/wp-content/uploads/2018/10/placeholder.com-logo1.png' }}/>
+        {
+          imageUrl ? <Image style={styles.logo} source={{ uri:imageUrl }}/> : null
+        }
       </View>
       <View style={styles.containerFooter}>
         <ActivityIndicator style={styles.loader} size={'large'} color={'grey'} />

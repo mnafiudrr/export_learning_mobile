@@ -7,6 +7,7 @@ import RootNavigation from './config/RootNavigation';
 import { useNavigationPersistence } from './utils/navigation-utils';
 import {AppLoading} from './component/AppLoading';
 import {useRefLoading} from './utils/loader';
+import { StatusBar } from 'expo-status-bar';
 
 const NAVIGATION_PERSISTENCE_KEY = '@root_nav_state';
 
@@ -22,6 +23,7 @@ export default function App() {
       >
         <RootNavigation />
         <AppLoading ref={(as) => useRefLoading(as)} />
+        <StatusBar style='dark' />
       </NavigationContainer>
   );
 }
